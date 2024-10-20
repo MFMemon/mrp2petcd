@@ -1,0 +1,12 @@
+- hosts: all
+
+  tasks:
+    - name: Transfer the etcd script
+      copy: src=runetcd.sh dest=/tmp/ mode=0777
+
+    - name: Install etcd and start etcd server
+      ansible.builtin.shell: touch /tmp/etcdrun.logs; nohup /tmp/runetcd.sh </dev/null >/tmp/etcdrun.logs 2>&1 &
+      # ansible.builtin.script: runetcd.sh
+    #   async: 1000
+    #   poll: 0
+      become: true

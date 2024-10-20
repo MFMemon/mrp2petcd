@@ -1,0 +1,1 @@
+Setup etcd server for mapreduce
