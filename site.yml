@@ -4,9 +4,13 @@
     - name: Transfer the etcd script
       copy: src=runetcd.sh dest=/tmp/ mode=0777
 
+    - name: Create file for etcd logs
+      ansible.builtin.file:
+        path: /tmp/etcdrun.logs
+        state: touch
+
     - name: Install etcd and start etcd server
-      ansible.builtin.shell: touch /tmp/etcdrun.logs; nohup /tmp/runetcd.sh </dev/null >/tmp/etcdrun.logs 2>&1 &
-      # ansible.builtin.script: runetcd.sh
-    #   async: 1000
-    #   poll: 0
+      ansible.builtin.shell: >
+        nohup /tmp/runetcd.sh {{index . 0}} {{index . 1}} {{index . 2}}
+        {{index . 3}} {{index . 4}} {{index . 5}} {{index . 6}} </dev/null >/tmp/etcdrun.logs 2>&1 &
       become: true
