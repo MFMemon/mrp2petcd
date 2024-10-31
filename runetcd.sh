@@ -15,7 +15,7 @@ curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/
 tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd-download-test --strip-components=1
 rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
 
-listen_ip = $(ip a | awk "/inet/ && /brd/" | tail -1 | awk '{print $2}' | awk -F/ '{print $1}')
+listen_ip=$(ip a | awk "/inet/ && /brd/" | tail -1 | awk '{print $2}' | awk -F/ '{print $1}')
 
 /tmp/etcd-download-test/etcd --name $1 --initial-advertise-peer-urls $2 \
   --listen-peer-urls http://${listen_ip}:2380 \
