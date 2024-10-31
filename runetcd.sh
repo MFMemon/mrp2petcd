@@ -17,9 +17,9 @@ rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
 
 listen_ip = $(ip a | awk "/inet/ && /brd/" | tail -1 | awk '{print $2}' | awk -F/ '{print $1}')
 
-/tmp/etcd-download-test/etcd --name $1 --initial-advertise-peer-urls http://$2 \
-  --listen-peer-urls http://${listen_ip}:$6 \
-  --listen-client-urls http://${listen_ip}:$7,http://127.0.0.1:$7 \
-  --advertise-client-urls http://$5 --initial-cluster-token etcd-cluster-1 \
-  --initial-cluster infra0=http://$2,infra1=http://$3,infra2=http://$4 \
+/tmp/etcd-download-test/etcd --name $1 --initial-advertise-peer-urls $2 \
+  --listen-peer-urls http://${listen_ip}:2380 \
+  --listen-client-urls http://${listen_ip}:2379,http://$3:2379 \
+  --advertise-client-urls $4 --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster $5 \
   --initial-cluster-state new
